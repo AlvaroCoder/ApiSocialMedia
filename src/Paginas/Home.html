@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Maqueta.css">
+    <title>MaquetaBlogPersonal</title>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div></div>
+            <div></div>
+            <div></div>
+        </header>
+        <div class="bg-header">
+            <p class="txt-bg-header">ALVA BLOG</p>
+        </div>
+        <div class="bg-about">
+            <div id="ctn-img-about"></div>
+            <div id="ctn-txt-about">
+                <h3 class="sbttl-1">Hola</h3>
+                <p class="desc-1">Fames ac turpis egestas maecenas pharetra convallis posuere morbi leo. In hac habitasse platea dictumst vestibulum. Amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor</p>
+            </div>
+        </div>
+        <div class="bg-proyects">
+            <div class="ctn-txt-proyect">
+                <h3>Mis proyectos</h3>
+            </div>
+            <div id="ctn-proyect">
+                <div class="ctn-proyect-card"></div>
+                <div id="proyect-card-lef1" class="ctn-proyect-card"></div>
+                <div class="ctn-proyect-card"></div>
+                <div id="proyect-card-lef1" class="ctn-proyect-card"></div>
+                <div class="ctn-proyect-card"></div>
+                <div id="proyect-card-lef1" class="ctn-proyect-card"></div>
+            </div>
+        </div>  
+        <div class="bg-hobbies">
+            <div class="ctn-txt-hobbies">
+                <h3 class="sbttl-1">Mis hobbies</h3>
+                <p class="desc-2">Neque sodales ut etiam sit amet nisl purus in mollis. Aliquam ut porttitor leo a diam sollicitudin tempor id eu. Nec feugiat in fermentum posuere urna.</p>
+            </div>
+            <div id="ctn-hobbie">
+                <div class="ctn-hobbie-card"></div>
+                <div class="ctn-hobbie-card"></div>
+                <div class="ctn-hobbie-card"></div>
+            </div>
+            <div id="ctn-puntos">
+                <div class="ctn-puntos-punto active"></div>
+                <div class="ctn-puntos-punto"></div>
+                <div class="ctn-puntos-punto"></div>
+            </div>
+        </div>
+        <div class="bg-blog">
+            <div class="ctn-title-blog">
+                <h3 class="sbttl-2">Últimos Blog</h3>
+                <div class="btn-more"></div>
+            </div>
+            <div class="ctn-blog">
+                <div id="blog-card-1" class="ctn-blog-card">
+                    <div class="img-blog-card"></div>
+                    <div class="txt-blog-card">
+                        <h3 class="sbttl-card">
+                            5 libros, top de Cálculo, que todo estudiante debe tener
+                        </h3>
+                        <span class="desc-card">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </span>
+                        <div class="foot-card">
+                            <p class="time-foot-card">24/08/2021</p>
+                            <p class="tag-foot-card">Programación</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="blog-card-2" class="ctn-blog-card">
+                    <div class="img-blog-card"></div>
+                    <div class="txt-blog-card">
+                        <h3 class="sbttl-card">
+                           ¿Cómo empezar a programar?
+                        </h3>
+                        <span class="desc-card">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </span>
+                        <div class="foot-card">
+                            <p class="time-foot-card">24/08/2021</p>
+                            <p class="tag-foot-card">Programación</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="blog-card-3" class="ctn-blog-card">
+                    <div class="img-blog-card"></div>
+                    <div class="txt-blog-card">
+                        <h3 class="sbttl-card">
+                            Lorem ipsum dolor sit amet
+                        </h3>
+                        <span class="desc-card">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </span>
+                        <div class="foot-card">
+                            <p class="time-foot-card">24/08/2021</p>
+                            <p class="tag-foot-card">Programación</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="blog-card-4" class="ctn-blog-card">
+                    <div class="img-blog-card"></div>
+                    <div class="txt-blog-card">
+                        <h3 class="sbttl-card">
+                            Lorem ipsum dolor sit amet
+                        </h3>
+                        <span class="desc-card">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </span>
+                        <div class="foot-card">
+                            <p class="time-foot-card">24/08/2021</p>
+                            <p class="tag-foot-card">Programación</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-yt">
+            <div class="img-bg-yt"></div>
+            <div class="txt-bg-yt">
+                <h3></h3>
+                <p></p>
+            </div>
+        </div>
+        <div class="bg-scmedia">
+
+        </div>
+        <footer>
+            <p>@ Copyrigth Alvaro</p>
+        </footer>
+    </div>
+    <script>
+        var circ_hobbie = document.querySelector("#ctn-hobbie")
+        var punto_hobbie = document.querySelectorAll(".ctn-puntos-punto")
+        punto_hobbie.forEach(( punto_hobb , posicion)=>{
+            punto_hobbie[posicion].addEventListener('click',()=>{
+                //Cuando la posicion es 0 el transform es de 36%
+                //Cuando la posicion es 1 el transform es de 5%
+                //Cuando la posición es 2 el transform es de -26%
+                let pos 
+                switch (posicion) {
+                    case 0:
+                        pos = 35
+                        break;
+                    case 1:
+                        pos = 4
+                        break;
+                    case 2:
+                        pos = -31
+                        break;
+                }
+                circ_hobbie.style.transform = `translateX(${pos}%)`
+                punto_hobbie.forEach((cadaPunto , i)=>{
+                    punto_hobbie[i].classList.remove("active")
+                })
+                punto_hobbie[posicion].classList.add("active")
+            })
+        })
+    </script>
+</body>
+</html>

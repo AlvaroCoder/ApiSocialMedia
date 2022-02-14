@@ -1,0 +1,313 @@
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0%;
+    padding: 0%;
+}
+#container{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 7vh 70vh 60vh 130vh 60vh 160vh 80vh 80vh 10vh ;
+}
+header{
+    background-color: rgb(54, 54, 54);
+}
+.bg-header{
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(141, 141, 141);
+
+}
+.txt-bg-header{
+    display: block;
+    text-align: center;
+    width: 500px;
+}
+.bg-about{
+    background-color: rgb(226, 226, 226);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#ctn-img-about,#ctn-txt-about{
+    width: 400px;
+    height: 40vh;
+    margin-left: 10px;
+}
+#ctn-txt-about{
+    padding-left: 1pc;
+}
+#ctn-img-about{
+    position: relative;
+    z-index: 2;
+    background-color: rgb(51, 63, 63);
+}
+#ctn-img-about::before{
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 40vh;
+    top: 20px;
+    left: -20px;
+    z-index: 1;
+    background-color: cornflowerblue;
+
+}
+.sbttl-1{
+    display: block;
+    position: relative;
+    margin-top: 4pc;
+    width: auto;
+}
+.desc-2{
+    width: 250px;
+}
+.sbttl-1::before{
+    position: absolute;
+    content: "";
+    width: 70px;
+    height: 30px;
+    border-bottom: 2px solid darkgoldenrod;
+}
+.bg-proyects{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#ctn-proyect{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,290px);
+    grid-gap: 15px;
+    height: auto;
+    width: 900px;
+}
+.ctn-proyect-card{
+    background-color: darkgrey;
+    height: 300px;
+}
+.bg-hobbies{
+    background-color: rgb(226, 226, 226);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+#ctn-hobbie{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 15px;
+    width: 700px;
+    height: 200px;
+    transform: translateX(0%);
+}
+.ctn-hobbie-card{
+    height: 200px;
+    background-color: darkslategray;
+    border-radius: 50%;
+}
+.bg-blog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ctn-title-blog{
+    width: 950px;
+    height: 15vh;
+}
+.ctn-blog{
+    width: 800px;
+    height: 120vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(350px,400px));
+    grid-template-rows: 60vh 60vh;
+    grid-template-areas: 
+    "cardBlog1 cardBlog2"
+    "cardBlog3 cardBlog4"
+    ;
+
+    column-gap: 15px;
+    row-gap: 10px   ;
+}
+.ctn-blog-card{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 35vh 20vh;
+    row-gap: 7px;
+}
+#blog-card-1{
+    grid-area: cardBlog1;
+}
+#blog-card-2{
+    grid-area: cardBlog2;
+}
+#blog-card-3{
+    grid-area: cardBlog3;
+}
+#blog-card-4{
+    grid-area: cardBlog4;
+}
+.img-blog-card{
+    background-color: gray;
+}
+.txt-blog-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+}
+.bg-yt{
+    background-color: rgb(61, 61, 61);
+}
+.sbttl-card{
+    display: inline-block;
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: auto;
+    font-size: 1.5em;
+}
+.desc-card{
+    display: inline-block;
+    font-size: 0.9em;
+    padding: 0%;
+    margin: 0%;
+}
+.foot-card{
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.tag-foot-card, .time-foot-card{
+    display: inline-block;
+    padding: 0%;
+    margin-top: 10px;
+    width: auto;
+    height: 3vh;
+}
+.tag-foot-card{
+    background-color: rgba(0, 0, 0, 0.308);
+    padding: 4px;
+    border-radius: 5px;
+}
+
+footer{
+    background-color: rgb(15, 13, 13);
+    text-align: center;
+    color: white;
+}
+@media only screen and (max-width : 990px ) {
+    #container{
+        grid-template-rows: 7vh 80vh 60vh auto 100vh 160vh 80vh 80vh 10vh ;
+    }
+    #ctn-proyect{
+        width: fit-content;
+        margin-bottom: 5pc;
+    }
+    .bg-hobbies{
+        flex-direction: column;
+    }
+    .desc-2{
+        width: 400px;
+    }
+    #proyec-card-left1{
+        margin-left: 3pc;
+    }
+    
+}
+@media only screen and ( max-width : 890px ) {
+    #container{
+        grid-template-rows: 7vh 80vh 90vh auto 100vh 280vh 80vh 80vh 10vh ;
+    }
+
+    .bg-about{
+        flex-direction: column;
+    }
+    #ctn-img-about{
+        width: calc(100vw/2);
+    }
+    #ctn-img-about::before{
+        width: calc(100vw/2);
+    }
+    .ctn-blog{
+        height: auto;
+
+        width: fit-content;
+        height: auto;
+
+        grid-template-columns: auto;
+        grid-template-rows: repeat(4,minmax(40vh,60vh));
+        grid-template-areas: 
+        "cardBlog1"
+        "cardBlog2"
+        "cardBlog3"
+        "cardBlog4";
+        row-gap: 20px   ;
+
+
+    }
+    #ctn-hobbie{
+        overflow: hidden;
+    }
+    .ctn-blog-card{
+        margin-right: 0%;
+        width: 85vw;
+        
+    }
+}
+@media only screen and (max-width : 500px ){
+    #container{
+        grid-template-rows: 7vh 80vh 90vh auto auto 280vh 80vh 80vh 10vh ;
+    }
+    .sbttl-1{
+        text-align: center;
+    }
+    #ctn-txt-about{
+        width: fit-content;
+    }
+    .desc-1{
+        width: 50vw;
+        font-size: 0.8rem;
+    }
+    .desc-2{
+        width: 50vw;
+    }
+    .bg-hobbies{
+        overflow: hidden;
+    }
+    #ctn-hobbie{
+        overflow: hidden;
+        transform: translateX(35%);
+        column-gap: 30px   ;
+        transition: 1s all;
+    }
+    .ctn-hobbie-card{
+        width: 200px;
+        height: 200px;
+    }
+    #ctn-puntos{
+        margin-top: 1pc;
+        width: 100vw;
+        height: 6vh;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .ctn-puntos-punto , .active{
+        margin-left: 4px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+    }
+    .ctn-puntos-punto{
+        background-color: darkgray;
+    }
+    .active{
+        background-color: rgb(20, 20, 88);
+    }
+}
+

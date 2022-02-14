@@ -1,0 +1,8 @@
+.paging-button{
+    visibility: hidden;
+    background-color: aquamarine;
+}
+.button-container{
+    background-color: bisque;
+    clear: both;
+}
