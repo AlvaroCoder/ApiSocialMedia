@@ -9,20 +9,6 @@ app.use(cors());
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-//Api routes
-app.get("/",(req,res)=>{
-    res.status(200).sendFile(__dirname+"/Paginas/Home.html",(e)=>{
-        if (e) {
-            throw e
-        }
-    })
-});
-
-//Styles Pages
-app.get("/Maqueta.css",(req,res)=>{
-    res.sendFile(__dirname+"/CSS/Maqueta.css")
-});
-
 app.use("/database",routesApi);
 
 app.listen(PORT, (e)=>{
