@@ -1,4 +1,4 @@
 #dependencies
 /node_modules
-
-./src/routes/articulo.js
+/.env
+/.Keys
