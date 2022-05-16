@@ -98,7 +98,7 @@ var controlador = {
         var obj = req.body
         var respond = await queryAuthor.updateAuthor(obj)
         if (respond == 201) {
-            res.send(`Autor ${obj.nombre} actualizado correctamente`)
+            res.send(`Autor :) ${obj.nombre} actualizado correctamente`)
         }       
     },
     crearPost : async (req,res)=>{
