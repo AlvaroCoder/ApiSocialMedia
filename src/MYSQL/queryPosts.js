@@ -19,4 +19,22 @@ const getPosts = (numberPost = 5)=>{
         })
     })
 }
-module.exports = {getPosts}
+const createPosts=(object)=>{
+    var {idAuthor, tituloPost, descripcion, comentarios, imagen, fechaCreacion} = object;
+    return new Promise((resolve,reject)=>{
+        pool.getConnection((err,connect)=>{
+            if (err) {
+                throw err;
+            }
+            connect.query(`INSERT INTO post (idAuthor, tituloPost, descripcion, comentarios, imagen, fechaCreacion) VALUES ?`,[[[idAuthor, tituloPost, descripcion, comentarios, imagen, fechaCreacion]]],(err)=>{
+                resolve();
+                connect.release();
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
+            })
+        })
+    });
+}
+module.exports = {getPosts, createPosts}

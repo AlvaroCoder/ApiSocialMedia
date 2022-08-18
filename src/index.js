@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 const PORT =  process.env.PORT || 8084 ;
 const routesApi = require("./routes/api");
-
 //Middlewares
 app.use(cors());
 app.use(express.urlencoded({extended:false}));

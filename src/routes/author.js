@@ -1,30 +1,36 @@
 const router = require('express').Router();
 const queryAuthor = require("../MYSQL/queryAuthor");
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const secretKey = process.env.TOKEN_KEY || 'sshhh'
+
+function Validar(data={}){
+    var error = {}
+    var { nombre, email, contrasenna } = data
+    if ( email == '' || contrasenna == '' || nombre == '') {
+        error.message = "Llene el formulario"
+    }
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+        error.message = "Email inválido"
+    }    
+    return error;
+}
 
 var controlador = {
+    userAdmin : {},
     signUp : async (req,res)=>{
         var {nombre , email, contrasenna } = req.body;
         //Validamos que la información no este vacía
-        if (nombre == '' || email  == '' || contrasenna == '') {
-            res.status(400).send({
-                error : 'Llene el formulario'
-            })
-            return;
-        }
-        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-            res.status(400).send({
-                error : 'Email inválido'
-            });
+        var respond = Validar(req.body);
+        if (respond.message) {
+            res.status(400).send(respond);
             return;
         }
         //Revisamos si existe algún usuario con el mismo correo
         var checkEmail = await queryAuthor.getAuthorByEmail(email) || [];
         if (checkEmail[0]) {
             res.status(401).json({
-                error: 'El correo ya existe'
+                error : {
+                    message : 'El correo ya existe '
+                }
             });
             return;
         }
@@ -42,22 +48,9 @@ var controlador = {
                 if (err) {
                     throw err
                 }
-                // Partes de un token
-                //Header
-                //Payload
-                //Signature
-                console.log(secretKey);
-                const token = jwt.sign(
-                    { nombre, email, contrasenna},
-                    secretKey,
-                    {
-                        expiresIn : '7d'
-                    }
-                )
                 
-                var userToken = token;
                 var hash_contrasenna =  hash;
-                var author = {nombre, email, contrasenna, hash_contrasenna, userToken}
+                var author = {nombre, email, contrasenna, hash_contrasenna}
                 var respond = await queryAuthor.createAuthor(author)
                 res.status(201).json(author)
             })
@@ -67,27 +60,38 @@ var controlador = {
     login : async(req, res)=>{
         var { email, contrasenna }=req.body 
         //Validamos al author por nombre e email
+        var respond = Validar(req.body);
+        if (respond.message) {
+            res.status(400).send(respond);
+            return;
+        }
         var author = await queryAuthor.getAuthorByEmail(email) || [];
-        
-        if (author[0]) {
-            var { contrasenn_hash } = author[0];
+        if (!author[0]) {
+            var error = {
+                message : 'No existe ese correo'
+            }
+            res.status(404).send(error)
+            return;
+        }
+        var { contrasenn_hash } = author[0];
             bcrypt.compare(contrasenna, contrasenn_hash, function (err,result){
                 if (err) {
                     res.sendStatus(404).send({
                         error : 'Falla en autenticación'
                     })
+                    return;
                 }
                 var err_obj = {
                     message : 'Contraseña incorrecta'
                 }
-                result ? res.status(201).send(author) : res.status(403).send(err_obj)
+                if (!result) {
+                    res.status(403).send(err_obj);
+                    return;
+                }
+                controlador.userAdmin = author;
+                res.status(201).send(author);
+                console.log(controlador.userAdmin);
             });
-        }else{
-            var error = {
-                message : 'No existe ese correo'
-            }
-            res.status(404).send(error)
-        }
     },
     mostrar : async (req,res)=>{
         var email = req.params.email
@@ -105,38 +109,14 @@ var controlador = {
         //Crearemos un post sencillo
         //Con titulo, una descripción e imagen
         var {titulo, img, descripcion} = req.body
+        console.log(controlador.userAdmin);
+        res.send(controlador.userAdmin);
         
     }
 }
 
 router.post("/signUp",controlador.signUp);
 router.post("/login",controlador.login);
-
-//Middleware para verificar el token
-//Recordar que mientras el cliente este navegando, siempre enviamos el token para verificación.
-router.use((req,res,next)=>{
-    let token = req.headers['x-access-token'] || req.headers['authorization'];
-    if (!token) {
-        res.status(400).send({
-            error : 'Es necesario un token para la autenticación'
-        })
-        return;
-    }
-    if (token.startsWith('Bearer ')) {
-        token = token.slice(7, token.length);
-    }
-    jwt.verify(token, secretKey,(err,decode)=>{
-        if (err) {
-            res.send({
-                error : 'El token no es válido'
-            })
-        }else{
-            req.decoded = decode
-            next();
-        }
-    })
-});
-
 router.get("/show/:email",controlador.mostrar);
 router.post("/createPost",controlador.crearPost);
 router.put("/updateAuthor",controlador.actualizarBio);
