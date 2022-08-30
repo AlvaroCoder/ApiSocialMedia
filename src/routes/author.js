@@ -52,7 +52,9 @@ var controlador = {
                 var hash_contrasenna =  hash;
                 var author = {nombre, email, contrasenna, hash_contrasenna}
                 var respond = await queryAuthor.createAuthor(author)
-                res.status(201).json(author)
+                controlador.userAdmin = author
+                res.status(201).json(respond)
+                console.log(controlador.userAdmin);
             })
         });
         
@@ -90,7 +92,6 @@ var controlador = {
                 }
                 controlador.userAdmin = author;
                 res.status(201).send(author);
-                console.log(controlador.userAdmin);
             });
     },
     mostrar : async (req,res)=>{
@@ -104,20 +105,12 @@ var controlador = {
         if (respond == 201) {
             res.send(`Autor :) ${obj.nombre} actualizado correctamente`)
         }       
-    },
-    crearPost : async (req,res)=>{
-        //Crearemos un post sencillo
-        //Con titulo, una descripción e imagen
-        var {titulo, img, descripcion} = req.body
-        console.log(controlador.userAdmin);
-        res.send(controlador.userAdmin);
-        
     }
 }
 
 router.post("/signUp",controlador.signUp);
 router.post("/login",controlador.login);
 router.get("/show/:email",controlador.mostrar);
-router.post("/createPost",controlador.crearPost);
 router.put("/updateAuthor",controlador.actualizarBio);
+
 module.exports = router;

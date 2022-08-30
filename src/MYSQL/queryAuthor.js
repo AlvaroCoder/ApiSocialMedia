@@ -2,7 +2,7 @@ const mysql = require('mysql')
 const {keys} = require('../Keys/KeyMysql')
 var pool = mysql.createPool(keys);
 
-const INSERT_QUERY = "INSERT INTO author (nombre, bio,  publicaciones, email, suscripcion, contrasenna,seguidores, seguidos, comentarios, contrasenn_hash ) VALUES ?";
+const INSERT_QUERY = "INSERT INTO author (nombre, publicaciones, email, suscripcion, contrasenna, contrasenn_hash ) VALUES ?";
 const SELECT_QUERY = "SELECT * FROM author ";
 const SELECT_QUERY_NOMBRE = "SELECT * FROM author WHERE nombre = ?";
 
@@ -59,14 +59,14 @@ const getAuthorByEmail = function (email) {
 }
 
 const createAuthor = function (object) {
-    var {nombre,  email, contrasenna, hash_contrasenna, token} = object;
+    var {nombre,  email, contrasenna, hash_contrasenna} = object;
     return new Promise((resolve, reject)=>{
         pool.getConnection((err,connect)=>{
             if (err) {
                 throw err
             }
-            connect.query(INSERT_QUERY,[[[nombre, '', 0, email, 0,contrasenna, 0,0,0,hash_contrasenna]]],(err)=>{
-                resolve(token)
+            connect.query(INSERT_QUERY,[[[nombre, 0, email, 0,contrasenna, hash_contrasenna]]],(err)=>{
+                resolve(object)
                 connect.release()
                 if (err) {
                     console.log(err);
