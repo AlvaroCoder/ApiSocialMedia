@@ -1,8 +1,9 @@
-const mysql = require('mysql')
+const mysql2 = require('mysql2/promise')
 const {keys} = require('../Keys/KeyMysql')
-var pool = mysql.createPool(keys);
+const poolRoute = process.env.DATABASE_URL || keys;
+var pool = mysql2.createPool(poolRoute);
 
-const INSERT_QUERY = "INSERT INTO author (nombre, publicaciones, email, suscripcion, contrasenna, contrasenn_hash ) VALUES ?";
+const INSERT_QUERY = "INSERT INTO author (nombre, img, email, contrasenna, contrasenn_hash ) VALUES ?";
 const SELECT_QUERY = "SELECT * FROM author ";
 const SELECT_QUERY_NOMBRE = "SELECT * FROM author WHERE nombre = ?";
 
@@ -59,13 +60,13 @@ const getAuthorByEmail = function (email) {
 }
 
 const createAuthor = function (object) {
-    var {nombre,  email, contrasenna, hash_contrasenna} = object;
+    var {nombre,  email,img, contrasenna, hash_contrasenna} = object;
     return new Promise((resolve, reject)=>{
         pool.getConnection((err,connect)=>{
             if (err) {
                 throw err
             }
-            connect.query(INSERT_QUERY,[[[nombre, 0, email, 0,contrasenna, hash_contrasenna]]],(err)=>{
+            connect.query(INSERT_QUERY,[[[nombre,img,email, contrasenna, hash_contrasenna]]],(err)=>{
                 resolve(object)
                 connect.release()
                 if (err) {
