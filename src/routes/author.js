@@ -29,7 +29,7 @@ var controlador = {
         if (checkEmail[0]) {
             res.status(401).json({
                 error : {
-                    message : 'El correo ya existe '
+                    message : 'El correo ya existe'
                 }
             });
             return;
@@ -51,10 +51,8 @@ var controlador = {
                 
                 var hash_contrasenna =  hash;
                 var author = {nombre, email, contrasenna, hash_contrasenna}
-                var respond = await queryAuthor.createAuthor(author)
-                controlador.userAdmin = author
-                res.status(201).json(respond)
-                console.log(controlador.userAdmin);
+                await queryAuthor.createAuthor(author)
+                res.status(201).send(author);
             })
         });
         
