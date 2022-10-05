@@ -7,15 +7,17 @@
 /src/Keys/KeyMysql.js
 /src/Keys
 
+/src/config
+
 /src/MYSQL
 /src/MYSQL/queryAuthor.js
 /src/MYSQL/queryPostEmail.js
 
 /package-lock.json
 /package.json
-/src/Images
 #production
 /build
 
 .env
 .env.local
+.env.development
