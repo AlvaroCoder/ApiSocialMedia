@@ -3,7 +3,15 @@
 /.env
 
 /src/Keys
-/src/Keys
+/src/Keys/KeyMysql.js
 
+/src/MYSQL
+/src/MYSQL/queryAuthor.js
+/src/MYSQL/queryPostEmail.js
+
+
+/src/Images
 #production
 /build
+
+.env
