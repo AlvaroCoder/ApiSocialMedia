@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mysql2 = require('mysql2/promise');
 const {keys} = require('../config/KeyMysql');
-const poolRoute = keys
+const poolRoute = process.env.DATABASE_URL || keys;
 const pool = mysql2.createPool(poolRoute);
 
 const GET_POSTS_FROM_USER = "SELECT  author.nombre, postemail.identifier, postemail.idPostEmail, postemail.fecha_creacion, estado.estado, postemail.SubjectEmail, postemail.Time2send FROM author INNER JOIN postemail ON author.idAuthor = postemail.Author_idAuthor INNER JOIN estado ON postemail.Estado_idEstado = estado.idEstado WHERE author.nombre = ?;"
