@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const queryPost = require('../MYSQL/queryPosts');
-const queryAuthor = require('../MYSQL/queryAuthor');
 const {sendMail, sendUniqueEmail} = require('../Services/emailer');
-const { createPostEmail, getIDPostEmail,getPostEmailByTitle, createContentEmail, getPostsFromUser, getPostEmailBySubject, getContentEmailByIDPost} = require('../MYSQL/queryPostEmail');
-const { getBodyEmail, getPostDetails} = require('../Services/PostClass').controladorPost;
+const { createEmptyPost, getPostsFromUser, getPostEmailBySubject} = require('../MYSQL/queryPostEmail');
+const {getAuthorByName} = require('../MYSQL/queryAuthor');
+const { getBodyEmail} = require('../Services/PostClass').controladorPost;
 
 function generatePass2Emails(emails, longitud) {
     const base = "abcdefghijklmopqrstuvxyzABCDEFGHIJKLMNOPQRSTUXYZ0123456789{}¿+#@^$%&/(=)_!><"
@@ -18,36 +17,17 @@ function generatePass2Emails(emails, longitud) {
     });
     return objct;
 }
-function generateCode() {
-    const base = 'abcdefghijklmopqrstuvxyzABCDEFGHIJKLMNOPQRSTUXYZ0123456789'
-    let passwor = ''
-    for (let index = 0; index < base.length; index++) {
-        let num_random = Math.floor(Math.random()*base.length)
-        passwor+=base.charAt(num_random);
-    }
-    return passwor
-}
-const controlador = {
-    savePostEmail : async (req, res)=>{
-        const body = req.body;
-        const {idPost,oldTitle, title} = body;
-        const idPostEmail = await getIDPostEmail(oldTitle); ;
-        if (idPost == idPostEmail) {
 
+const controlador = {
+    createEmptyPostEmail:async (req,res)=>{
+        const {nombre} = req.body;
+        const existAuthor = await getAuthorByName(nombre);
+        if (existAuthor[0]) {
+            const result = await createEmptyPost(nombre);
+            res.status(200).send(result);    
             return;
         }
-        await createPostEmail(body);                
-        await createContentEmail(body);
-        res.status(200).send(getPostDetails());
-    },
-    
-    createContentEmail:async (req,res)=>{
-        const subject = req.body.subject;
-        const result = await getPostEmailBySubject(subject) || [];
-        if (!result[0]) {
-            const body = req.body;
-            
-        }        
+        res.status(404).send("El usuario no existe");
     },
     contentCreate : (req,res)=>{
         getBodyEmail() ? res.send("Esta lleno") : res.send("Esta vacio")
@@ -59,13 +39,10 @@ const controlador = {
     },
     getPostsEmail : async (req,res)=>{
         const {nombre} = req.body;
-        const result =await getPostsFromUser(nombre);
+        const result = await getPostsFromUser(nombre);
         res.send(result);
     },
-    updatePostMail:(req,res)=>{
-        
-    }, 
-    sendEmailCode : (req,res)=>{
+    sendEmailCode :  (req,res)=>{
         const {from,to, subject} = req.body;
         const obj_Pass_Email = generatePass2Emails(to, 12);
         to.forEach(elem=>{
@@ -73,20 +50,15 @@ const controlador = {
         })
         res.send(obj_Pass_Email);
     },
-    getPostEmailBySubject : async (req, res)=>{
-        const {subjectEmail} = req.params;
-        const subject = subjectEmail.split("&").join(" ");
-        const idPost = await getIDPostEmail(subject);
-        const postEmail = await getPostEmailBySubject(subject);
-        const contentEmail = await getContentEmailByIDPost(idPost);
-        let respond = postEmail[0]
-        respond.contentEmail = contentEmail
-        res.status(200).send(respond);
+    getPostEmailByIdentifierSubject : async (req, res)=>{
+        const {identifier,subjectEmail} = req.params;
+        const subject = subjectEmail;
+        const postEmail = await getPostEmailBySubject(subject, identifier);
+        res.status(200).send(postEmail);
     }
 }
-router.get("/email/:subjectEmail", controlador.getPostEmailBySubject);
-router.post("/email/savePostEmail", controlador.savePostEmail);
-router.post("/email",controlador.getPostsEmail);
-router.post("/email/createContentEmail",controlador.createContentEmail);
-router.get("/email/contentCreate",controlador.contentCreate);
+router.post("/email", controlador.getPostsEmail);
+router.get("/email/:identifier/:subjectEmail", controlador.getPostEmailByIdentifierSubject)
+router.post("/email/new",controlador.createEmptyPostEmail);
+
 module.exports = router;

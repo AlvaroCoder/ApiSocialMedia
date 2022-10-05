@@ -14,6 +14,7 @@ function Validar(data={}){
     return error;
 }
 
+
 var controlador = {
     userAdmin : {},
     signUp : async (req,res)=>{
@@ -25,16 +26,15 @@ var controlador = {
             return;
         }
         //Revisamos si existe algún usuario con el mismo correo
-        var checkEmail = await queryAuthor.getAuthorByEmail(email) || [];
-        if (checkEmail[0]) {
-            res.status(401).json({
-                error : {
-                    message : 'El correo ya existe'
-                }
-            });
-            return;
-        }
-
+         var checkEmail = await queryAuthor.getAuthorByEmail(email) || [];
+         if (checkEmail[0]) {
+             res.status(401).json({
+                 error : {
+                     message : 'El correo ya existe'
+                 }
+             });
+             return;
+         }
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
                 res.status(400).json({
@@ -51,14 +51,14 @@ var controlador = {
                 
                 var hash_contrasenna =  hash;
                 var author = {nombre, email, contrasenna, hash_contrasenna}
-                await queryAuthor.createAuthor(author)
+                await queryAuthor.createAuthor(author);
                 res.status(201).send(author);
             })
         });
         
     },
     login : async(req, res)=>{
-        var { email, contrasenna }=req.body 
+        var { email, contrasenna }=req.body ;
         //Validamos al author por nombre e email
         var respond = Validar(req.body);
         if (respond.message) {
@@ -73,8 +73,8 @@ var controlador = {
             res.status(404).send(error)
             return;
         }
-        var { contrasenn_hash } = author[0];
-            bcrypt.compare(contrasenna, contrasenn_hash, function (err,result){
+        var { password_hash } = author[0];
+            bcrypt.compare(contrasenna, password_hash, function (err,result){
                 if (err) {
                     res.sendStatus(404).send({
                         error : 'Falla en autenticación'
@@ -88,14 +88,13 @@ var controlador = {
                     res.status(403).send(err_obj);
                     return;
                 }
-                controlador.userAdmin = author;
                 res.status(201).send(author);
             });
     },
     mostrar : async (req,res)=>{
-        var email = req.params.email
-        var respond = await queryAuthor.getAuthorByEmail(email)
-        res.send(respond)
+        var nombre = req.params.nombre
+        var respond = await queryAuthor.getAuthorByName(nombre);
+        res.send(respond[0]);
     },
     actualizarBio : async (req,res)=> {
         var obj = req.body
@@ -103,12 +102,24 @@ var controlador = {
         if (respond == 201) {
             res.send(`Autor :) ${obj.nombre} actualizado correctamente`)
         }       
+    },
+    updateProfilePhoto : async(req, res)=>{
+        const img = req.file
+        const body = req.body
+        res.send('Imagen guardada')
+        console.log(img);
+        console.log(body);
+    },
+    selectImageProfiel : async(req, res)=>{
+        var obj = req.body
+        const respond = await queryAuthor.getImageByName(obj.name);
+        res.json(respond)
+        console.log(respond);
     }
 }
 
 router.post("/signUp",controlador.signUp);
 router.post("/login",controlador.login);
-router.get("/show/:email",controlador.mostrar);
-router.put("/updateAuthor",controlador.actualizarBio);
-
+router.get("/show/:nombre",controlador.mostrar);
+router.post("/upload/profile", controlador.updateProfilePhoto);
 module.exports = router;
