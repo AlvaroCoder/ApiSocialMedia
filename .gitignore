@@ -1,6 +1,6 @@
 #dependencies
 /node_modules
-/.env
+/*.env
 /.env
 
 /src/Keys
@@ -18,3 +18,4 @@
 /build
 
 .env
+.env.local
