@@ -1,9 +1,8 @@
 require('dotenv').config();
 const mysql2 = require('mysql2/promise');
-const {keys} = require('../Keys/KeyMysql');
+const {keys} = require('../config/KeyMysql');
 const poolRoute = keys
 const pool = mysql2.createPool(poolRoute);
-const {setBodyEmail, setBodyContentEmail, getElementsBodyEmail} = require('../Services/PostClass').controladorPost;
 
 const GET_POSTS_FROM_USER = "SELECT  author.nombre, postemail.identifier, postemail.idPostEmail, postemail.fecha_creacion, estado.estado, postemail.SubjectEmail, postemail.Time2send FROM author INNER JOIN postemail ON author.idAuthor = postemail.Author_idAuthor INNER JOIN estado ON postemail.Estado_idEstado = estado.idEstado WHERE author.nombre = ?;"
 const GET_CONTENT_BY_IDPOST= " SELECT ;";
@@ -148,7 +147,7 @@ const createContentEmail = async objct=>{
         const idContent = await pool.execute(INSERT_VALUES_CONTENTEMAIL, [idPost, content, tipoDe]).then((val)=>{
             return val[0].insertId
         });
-        setBodyContentEmail(index, {idContent, content, tipoDe});
+
     });
 }
 

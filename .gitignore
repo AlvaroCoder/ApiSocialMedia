@@ -8,7 +8,6 @@
 /src/Keys
 
 /src/config
-
 /src/MYSQL
 /src/MYSQL/queryAuthor.js
 /src/MYSQL/queryPostEmail.js
