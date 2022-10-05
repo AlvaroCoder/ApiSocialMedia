@@ -11,7 +11,8 @@
 /src/MYSQL/queryAuthor.js
 /src/MYSQL/queryPostEmail.js
 
-
+/package-lock.json
+/package.json
 /src/Images
 #production
 /build
