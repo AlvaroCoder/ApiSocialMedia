@@ -1,9 +1,11 @@
 #dependencies
 /node_modules
 /.env
+/.env
 
 /src/Keys
 /src/Keys/KeyMysql.js
+/src/Keys
 
 /src/MYSQL
 /src/MYSQL/queryAuthor.js
